@@ -23,15 +23,18 @@ test("av.by", async ({ page }) => {
 
   //Choose the car with the highest price
 
+  let maxPriceArr = await page.locator(".listing-item__priceusd");
+
   await page.locator("button[title='актуальные']").click();
   await page.locator("button[data-item-label='дорогие']").click();
 
   //Open car page and verify it
 
-  const maxPriceFromList = await page
-    .locator(".listing-item__priceusd")
-    .nth(0)
-    .innerText();
+  // const maxPriceFromList = await page
+  //   .locator(".listing-item__priceusd")
+  //   .nth(0)
+  //   .innerText();
+
   await page.locator("a.listing-item__link").nth(0).click();
 
   const maxPriceFromItem = await page
