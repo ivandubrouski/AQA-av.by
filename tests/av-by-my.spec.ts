@@ -44,8 +44,7 @@ test("av.by", async ({ page }) => {
   // interface Inum { '1' :"123", '2':'wefwef', '3':'MediaKeyMe'}
   // const a:Inum =  { '3':'MediaKeyMe'}
 
-  console.log(getMaxPrice);
-  let sortedArr = getMaxPrice.sort((a, b) => a - b);
+  let sortedArr = arr.sort((a, b) => b - a);
 
   console.log(arr);
   let maxPriceFromList = sortedArr[0];
