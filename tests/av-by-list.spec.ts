@@ -47,7 +47,7 @@ test("av.by-select_from_list", async ({ page }) => {
 
   const sortedArr = numberArr.sort((a, b) => b - a);
 
-  let maxPriceFromList = sortedArr[0];
+  const maxPriceFromList = sortedArr[0];
   console.log(maxPriceFromList);
 
   //Open car page and verify it
@@ -58,9 +58,6 @@ test("av.by-select_from_list", async ({ page }) => {
   await page.waitForResponse(
     (res) => res.url().includes("/ppub_config") && res.status() === 200
   );
-
-  // const list = page.locator("div.listing__container div div.listing__items");
-  // list.waitFor({ state: "visible" });
 
   await page.locator("a.listing-item__link").nth(0).click();
 
