@@ -14,31 +14,28 @@ test("av.by", async ({ page }) => {
   await page.locator("input.dropdown__input").type("ford");
   await page.keyboard.press("Enter");
 
-  await page
-    .locator("(//span[@class='dropdown-floatlabel__value'])[2]")
-    .click();
+  await page.locator("span.dropdown-floatlabel__value").nth(1).click();
   await page.locator("[data-item-label='Mustang']").click();
 
   await page.locator("a[href='https://cars.av.by/ford/mustang']").click();
 
   //Choose the car with the highest price
 
-  let maxPriceArr = await page.locator(".listing-item__priceusd");
-
   await page.locator("button[title='актуальные']").click();
   await page.locator("button[data-item-label='дорогие']").click();
 
   //Open car page and verify it
 
-  // const maxPriceFromList = await page
-  //   .locator(".listing-item__priceusd")
-  //   .nth(0)
-  //   .innerText();
+  const maxPriceFromList = await page
+    .locator(".listing-item__priceusd")
+    .nth(0)
+    .innerText();
 
   await page.locator("a.listing-item__link").nth(0).click();
 
   const maxPriceFromItem = await page
     .locator(".card__price-secondary span")
     .innerText();
+
   expect(maxPriceFromItem).toMatch(maxPriceFromList);
 });
