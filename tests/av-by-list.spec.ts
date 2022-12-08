@@ -45,7 +45,7 @@ test("av.by-select_from_list", async ({ page }) => {
   const pricesArr = await Promise.all(allPrices.map((el) => el.innerText()));
   const numberArr = pricesArr.map((el) => Number(el.replace(/[^0-9]/g, "")));
 
-  let sortedArr = numberArr.sort((a, b) => b - a);
+  const sortedArr = numberArr.sort((a, b) => b - a);
 
   let maxPriceFromList = sortedArr[0];
   console.log(maxPriceFromList);
