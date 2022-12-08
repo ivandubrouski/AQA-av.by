@@ -3,19 +3,19 @@ import { test, expect } from "@playwright/test";
 test("av.by-select_from_list", async ({ page }) => {
   //Go to https://av.by/
   //Verify that page is opened
-
-  await page.goto("https://av.by/");
+  const av = "https://av.by/";
+  await page.goto(av);
   if (page.locator("body.modal-open")) {
     await page.locator(".modal__footer button").click();
   }
 
-  await expect(page).toHaveURL("https://av.by/");
+  await expect(page).toHaveURL(av);
 
   //Apply filters to find Ford Mustang
 
   await page.locator("span .dropdown-floatlabel__value").nth(0).click();
   await page.locator("input.dropdown__input").click();
-  await page.locator("input.dropdown__input").type("ford");
+  await page.locator("input.dropdown__input").fill("ford");
   await page.keyboard.press("Enter");
 
   await page.locator("span.dropdown-floatlabel__value").nth(1).click();
@@ -25,9 +25,16 @@ test("av.by-select_from_list", async ({ page }) => {
 
   //Choose the car with the highest price
 
+  const showMore = page.locator("//*[contains(text(), 'показать ещё')]");
+  await showMore.waitFor({ state: "visible" });
+
   while (
     await page.locator("//*[contains(text(), 'показать ещё')]").isVisible()
   ) {
+    if (page.locator("//*[contains(text(), 'показать ещё')]")) {
+      await showMore.waitFor({ state: "visible" });
+    }
+
     await page.locator(".paging__button").click();
   }
 
@@ -47,6 +54,14 @@ test("av.by-select_from_list", async ({ page }) => {
 
   await page.locator("button[title='актуальные']").click();
   await page.locator("button[data-item-label='дорогие']").click();
+
+  await page.waitForResponse(
+    (res) => res.url().includes("/ppub_config") && res.status() === 200
+  );
+
+  // const list = page.locator("div.listing__container div div.listing__items");
+  // list.waitFor({ state: "visible" });
+
   await page.locator("a.listing-item__link").nth(0).click();
 
   const maxPriceFromItem = (

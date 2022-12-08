@@ -36,5 +36,6 @@ test("av.by", async ({ page }) => {
   const maxPriceFromItem = await page
     .locator(".card__price-secondary span")
     .innerText();
+
   expect(maxPriceFromItem).toMatch(maxPriceFromList);
 });
